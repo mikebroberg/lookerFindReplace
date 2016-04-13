@@ -24,7 +24,6 @@ for line in fh :
     if len(words) > 1 and words[0] == "sql:" :
         #If the sql line _doesn't_ contain a quotation mark, it's OK.
         if "\"" not in line :
-            #"end" param takes empty string, prevents extra newlines in file
             print (line, end='', file=writeOut,)
             continue
 
@@ -34,8 +33,6 @@ for line in fh :
         #If only one element in hits list, substitue & write out
         if len(hits) == 1 :
             fixed = hits[0].strip('\"').upper()
-            #"count" param ensures only one sub is made for the matched regex.
-            #Without "count", it would sub all matches
             print (p.sub(fixed, line, count=1), end='', file=writeOut,)
         #Otherwise more than one hit, so make multiple substitutions
         else :
@@ -49,7 +46,6 @@ for line in fh :
     else :
         print (line, end='', file=writeOut,)
 
-#Success!
 print ("Yeah, dog! Wrote: ", writeOut)
 fh.close()
 writeOut.close()
